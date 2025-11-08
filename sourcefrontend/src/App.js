@@ -22,7 +22,7 @@ import bg8 from "./image/anh8.jpg";
 import bg9 from "./image/anh9.jpg";
 
 // const API_URL = "http://localhost:8000/api";
-const API_URL = "http://api.shopaccpubgpc.vn/api";
+const API_URL = "https://api.shopaccpubgpc.vn/api";
 
 function AdminWrapper(props) {
   const location = useLocation();

@@ -74,7 +74,7 @@ const UserManagement = ({
 
     try {
       const response = await fetch(
-        `http://api.shopaccpubgpc.vn/api/users/${userId}/nicks`
+        `https://api.shopaccpubgpc.vn/api/users/${userId}/nicks`
       );
       const data = await response.json();
       setUserNicks(data.nicks || []);

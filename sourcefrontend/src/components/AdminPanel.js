@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LoginModal from "./LoginModal";
 
-const API_URL = "http://api.shopaccpubgpc.vn/api";
+const API_URL = "https://api.shopaccpubgpc.vn/api";
 
 const AdminPanel = ({
   addAccount,
