@@ -8,8 +8,8 @@ class FTPClient:
     def __init__(self):
         self.host = "202.92.4.66"  # Hoặc "ftp.chodenpubgpc.com"
         self.port = 21
-        self.username = "aqczepfrhosting_ftpdev"  # USERNAME CHÍNH
-        self.password = "123456aA@"  # PASSWORD CỦA NHCHOSV0
+        self.username = ""  # USERNAME CHÍNH
+        self.password = ""  # PASSWORD CỦA NHCHOSV0
         self.ftp_upload_dir = "/" 
         self.web_access_url = "https://sub.shopaccpubgpc.vn/"
 
