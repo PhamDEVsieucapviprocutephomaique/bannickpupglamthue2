@@ -10,7 +10,6 @@ import Admin from "./pages/Admin";
 import News from "./pages/News";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import DatabaseManagement from "./components/DatabaseManagement";
 
 import bg1 from "./image/anh1.jpg";
 import bg2 from "./image/anh2.jpg";
@@ -22,7 +21,8 @@ import bg7 from "./image/anh7.jpg";
 import bg8 from "./image/anh8.jpg";
 import bg9 from "./image/anh9.jpg";
 
-const API_URL = "localhost backend  ";
+// const API_URL = "http://localhost:8000/api";
+const API_URL = "http://api.shopaccpubgpc.vn/api";
 
 function AdminWrapper(props) {
   const location = useLocation();
@@ -355,8 +355,10 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-2xl">Đang tải dữ liệu...</div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 flex items-center justify-center">
+        <div className="text-white text-2xl animate-pulse">
+          Đang tải dữ liệu...
+        </div>
       </div>
     );
   }
@@ -364,7 +366,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen relative overflow-hidden">
-        {/* BACKGROUND SLIDESHOW */}
+        {/* BACKGROUND SLIDESHOW - KHÔNG CÓ LỚP TRẮNG MỜ */}
         <div className="fixed inset-0 z-0">
           <div
             className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
@@ -375,9 +377,7 @@ function App() {
               backgroundAttachment: "fixed",
               opacity: 1,
             }}
-          >
-            <div className="absolute inset-0 bg-black bg-opacity-70"></div>
-          </div>
+          ></div>
 
           <div
             className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
@@ -388,14 +388,12 @@ function App() {
               backgroundAttachment: "fixed",
               opacity: 0,
             }}
-          >
-            <div className="absolute inset-0 bg-black bg-opacity-70"></div>
-          </div>
+          ></div>
         </div>
 
-        {/* ANIMATED PARTICLES */}
+        {/* GLITTER EFFECT */}
         <div className="fixed inset-0 z-1 pointer-events-none">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <div
               key={i}
               className="absolute animate-float"
@@ -403,10 +401,10 @@ function App() {
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${15 + Math.random() * 10}s`,
+                animationDuration: `${10 + Math.random() * 10}s`,
               }}
             >
-              <div className="w-1 h-1 bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full blur-sm opacity-40"></div>
+              <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full blur-sm opacity-60 shadow-lg"></div>
             </div>
           ))}
         </div>
@@ -458,12 +456,6 @@ function App() {
                   />
                 }
               />
-              <Route
-                path="/database"
-                element={<DatabaseManagement currentUser={currentUser} />}
-              />
-
-              {/* ĐÃ XÓA ROUTE /user-management */}
             </Routes>
           </main>
 

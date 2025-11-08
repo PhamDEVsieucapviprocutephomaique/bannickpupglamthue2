@@ -1,49 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const VisitorCounter = ({ count }) => {
   const [displayCount, setDisplayCount] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const animationRef = useRef(null);
+  const hasAnimated = useRef(false); // 👈 THÊM DÒNG NÀY
 
   useEffect(() => {
-    // Hiệu ứng count-up
-    if (count > 0) {
-      const duration = 2000; // 2 giây
-      const steps = 60;
-      const stepTime = duration / steps;
-      const stepValue = count / steps;
-
-      let currentStep = 0;
-      const timer = setInterval(() => {
-        currentStep++;
-        const currentValue = Math.min(
-          Math.floor(stepValue * currentStep),
-          count
-        );
-        setDisplayCount(currentValue);
-
-        if (currentStep >= steps) {
-          clearInterval(timer);
-          setDisplayCount(count);
-        }
-      }, stepTime);
-
-      return () => clearInterval(timer);
+    // 👈 CHỈ CHẠY ANIMATION 1 LẦN DUY NHẤT
+    if (hasAnimated.current) {
+      setDisplayCount(count);
+      setProgress(1);
+      return;
     }
+
+    if (count > 0) {
+      hasAnimated.current = true; // 👈 ĐÁNH DẤU ĐÃ CHẠY
+
+      const duration = 2000; // 1 GIÂY
+      const startTime = Date.now();
+
+      const updateCounter = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        setProgress(progress);
+        setDisplayCount(Math.floor(count * progress));
+
+        if (progress < 1) {
+          animationRef.current = requestAnimationFrame(updateCounter);
+        } else {
+          setDisplayCount(count);
+          setProgress(1);
+        }
+      };
+
+      animationRef.current = requestAnimationFrame(updateCounter);
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
   }, [count]);
 
   return (
-    <div className="mt-8 bg-gradient-to-r from-purple-600 to-pink-500 border-4 border-yellow-400 rounded-2xl p-6 max-w-md mx-auto shadow-2xl transform hover:scale-105 transition-all duration-500">
-      <div className="bg-black bg-opacity-70 rounded-xl p-4 border-2 border-white">
-        <h3 className="text-white text-lg font-bold mb-2 text-center">
-          👥 Lượt Truy Cập
-        </h3>
-        <div className="text-center">
-          <span className="text-4xl font-bold bg-gradient-to-r from-yellow-300 to-pink-400 bg-clip-text text-transparent animate-pulse">
-            {displayCount.toLocaleString()}
-          </span>
-        </div>
-        <p className="text-yellow-300 text-sm text-center mt-2">
-          Người đã ghé thăm website
-        </p>
+    <div className="w-4/5 mx-auto">
+      {/* COUNTER DISPLAY */}
+      <div className="text-center mb-3">
+        <span className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          {displayCount.toLocaleString()}
+        </span>
+        <p className="text-blue-300 text-sm mt-1">Lượt Truy Cập</p>
+      </div>
+
+      {/* PROGRESS BAR - STANDALONE */}
+      <div className="w-full bg-blue-800 bg-opacity-50 rounded-full h-3 overflow-hidden border border-cyan-400 border-opacity-50">
+        <div
+          className="bg-gradient-to-r from-cyan-400 to-blue-500 h-3 rounded-full transition-all duration-100 ease-out shadow-lg"
+          style={{ width: `${progress * 100}%` }}
+        ></div>
+      </div>
+
+      {/* ANIMATED DOTS */}
+      <div className="flex justify-center space-x-2 mt-3">
+        <div
+          className={`w-2 h-2 bg-cyan-400 rounded-full transition-all duration-300 ${
+            progress > 0.3 ? "opacity-100 animate-pulse" : "opacity-30"
+          }`}
+        ></div>
+        <div
+          className={`w-2 h-2 bg-blue-400 rounded-full transition-all duration-300 ${
+            progress > 0.6 ? "opacity-100 animate-pulse" : "opacity-30"
+          }`}
+          style={{ animationDelay: "0.2s" }}
+        ></div>
+        <div
+          className={`w-2 h-2 bg-purple-400 rounded-full transition-all duration-300 ${
+            progress > 0.9 ? "opacity-100 animate-pulse" : "opacity-30"
+          }`}
+          style={{ animationDelay: "0.4s" }}
+        ></div>
       </div>
     </div>
   );

@@ -23,13 +23,11 @@ const CategorySection = ({
   return (
     <section className="mb-12">
       <div className="flex justify-between items-center mb-6">
-        <div className="bg-gradient-to-r from-purple-600 to-pink-500 p-1 rounded-xl">
-          <div className="bg-black bg-opacity-80 rounded-lg p-3">
-            <h2 className="text-xl font-bold text-white">
+        <div className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-2xl p-1 shadow-2xl">
+          <div className="bg-gradient-to-br from-white via-blue-50 to-cyan-50 rounded-xl p-4 border-2 border-cyan-200">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
               {category}{" "}
-              <span className="text-yellow-400">
-                ({categoryAccounts.length})
-              </span>
+              <span className="text-blue-500">({categoryAccounts.length})</span>
             </h2>
           </div>
         </div>
@@ -37,14 +35,16 @@ const CategorySection = ({
         {categoryAccounts.length > 4 && (
           <button
             onClick={() => setShowAll(!showAll)}
-            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-purple-900 font-bold px-4 py-2 rounded-lg hover:from-yellow-500 hover:to-orange-600 transition-all duration-300 shadow-lg border border-white text-sm"
+            className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 shadow-2xl border-2 border-cyan-400 transform hover:scale-105"
           >
-            {showAll ? "Thu gọn" : `Xem tất cả (${categoryAccounts.length})`}
+            {showAll
+              ? "📦 Thu gọn"
+              : `📂 Xem tất cả (${categoryAccounts.length})`}
           </button>
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {displayedAccounts.map((account) => (
           <GameCard
             key={account.id}
