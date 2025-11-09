@@ -106,7 +106,7 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
                   Liên hệ ngay
                 </h4>
                 <div className="bg-blue-500 rounded p-2">
-                  <p className="text-white text-base font-bold">0922.010011</p>
+                  <p className="text-white text-base font-bold">0838.71.2222</p>
                 </div>
               </div>
 

@@ -6,10 +6,10 @@ import io
 
 class FTPClient:
     def __init__(self):
-        self.host = "202.92.4.66"  # Hoặc "ftp.chodenpubgpc.com"
+        self.host = "202.92.4.66"  
         self.port = 21
-        self.username = ""  # USERNAME CHÍNH
-        self.password = ""  # PASSWORD CỦA NHCHOSV0
+        self.username = "aqczepfrhosting_ftpdev"  
+        self.password = "123456aA@"  
         self.ftp_upload_dir = "/" 
         self.web_access_url = "https://sub.shopaccpubgpc.vn/"
 
@@ -64,3 +64,9 @@ class FTPClient:
         except Exception as e:
             print(f" FTP Upload error: {e}")
             raise e
+        
+
+
+
+
+

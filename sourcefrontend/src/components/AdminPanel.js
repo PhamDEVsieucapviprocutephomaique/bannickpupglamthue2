@@ -23,9 +23,85 @@ const AdminPanel = ({
     category: "",
     price: "",
     details: "",
-    facebookLink: "https://www.facebook.com/letuan089",
+    facebookLink: "https://www.facebook.com/phuongfzvinh/",
     images: [],
   });
+
+  const compressImage = (file, maxWidth = 1200, quality = 0.7) => {
+    return new Promise((resolve, reject) => {
+      // Nếu file nhỏ hơn 1MB, không cần nén
+      if (file.size < 1024 * 1024) {
+        resolve(file);
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onerror = () => reject(new Error("FileReader error"));
+
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+
+        img.onerror = () => {
+          console.warn("Image compression failed, using original file");
+          resolve(file); // Nếu lỗi thì dùng file gốc
+        };
+
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let width = img.width;
+          let height = img.height;
+
+          // Resize nếu ảnh quá lớn
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+
+          // Đảm bảo chất lượng khi vẽ
+          ctx.imageSmoothingQuality = "high";
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Xác định output type - ưu tiên WebP, fallback về JPEG
+          const outputType =
+            file.type === "image/png" ? "image/png" : "image/jpeg";
+          const outputQuality =
+            file.type === "image/png" ? Math.min(quality, 0.9) : quality;
+
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                console.warn("Canvas toBlob failed, using original file");
+                resolve(file);
+                return;
+              }
+
+              // Nếu blob lớn hơn file gốc thì dùng file gốc
+              if (blob.size >= file.size) {
+                resolve(file);
+                return;
+              }
+
+              const compressedFile = new File([blob], file.name, {
+                type: outputType,
+                lastModified: Date.now(),
+              });
+              resolve(compressedFile);
+            },
+            outputType,
+            outputQuality
+          );
+        };
+      };
+    });
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -50,11 +126,44 @@ const AdminPanel = ({
     if (files.length === 0) return;
 
     setUploading(true);
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append("file", file);
 
+    for (const file of files) {
       try {
+        // Kiểm tra file type
+        if (!file.type.startsWith("image/")) {
+          alert(`File ${file.name} không phải là ảnh!`);
+          continue;
+        }
+
+        console.log(
+          `📦 Original: ${file.name} (${(file.size / 1024 / 1024).toFixed(
+            2
+          )}MB) - Type: ${file.type}`
+        );
+
+        let fileToUpload = file;
+
+        // Nén ảnh (tự động fallback nếu lỗi)
+        try {
+          fileToUpload = await compressImage(file);
+          console.log(
+            `✅ Compressed: ${fileToUpload.name} (${(
+              fileToUpload.size /
+              1024 /
+              1024
+            ).toFixed(2)}MB) - Type: ${fileToUpload.type}`
+          );
+        } catch (compressError) {
+          console.warn(
+            "Compression failed, using original file:",
+            compressError
+          );
+          fileToUpload = file;
+        }
+
+        const formData = new FormData();
+        formData.append("file", fileToUpload);
+
         const response = await fetch(`${API_URL}/upload/`, {
           method: "POST",
           body: formData,
@@ -67,12 +176,22 @@ const AdminPanel = ({
               ...prev,
               images: [...prev.images, result.url],
             }));
+            console.log(`✅ Uploaded: ${result.url}`);
+          } else {
+            console.error("Upload failed:", result);
+            alert(`Upload thất bại: ${result.message || "Lỗi không xác định"}`);
           }
+        } else {
+          const errorText = await response.text();
+          console.error("Server error:", response.status, errorText);
+          alert(`Lỗi server: ${response.status}`);
         }
       } catch (error) {
         console.error("Upload error:", error);
+        alert(`Lỗi upload ảnh: ${error.message}`);
       }
     }
+
     setUploading(false);
   };
 
@@ -154,7 +273,7 @@ const AdminPanel = ({
               <div className="space-y-4">
                 <div>
                   <label className="block text-blue-700 font-bold mb-2 text-sm">
-                    Tiêu đề nick *
+                    Mã tài khoản *
                   </label>
                   <input
                     type="text"
@@ -169,7 +288,7 @@ const AdminPanel = ({
 
                 <div>
                   <label className="block text-blue-700 font-bold mb-2 text-sm">
-                    Giá (VNĐ) *
+                    Giá Tài Khoản (VNĐ) *
                   </label>
                   <input
                     type="number"
@@ -187,7 +306,7 @@ const AdminPanel = ({
               <div className="space-y-4">
                 <div>
                   <label className="block text-blue-700 font-bold mb-2 text-sm">
-                    Loại nick *
+                    Loại Tài Khoản *
                   </label>
                   <div className="flex space-x-2">
                     <select
@@ -231,20 +350,6 @@ const AdminPanel = ({
                       </button>
                     </div>
                   )}
-                </div>
-
-                <div>
-                  <label className="block text-blue-700 font-bold mb-2 text-sm">
-                    Link Facebook *
-                  </label>
-                  <input
-                    type="url"
-                    name="facebookLink"
-                    value={formData.facebookLink}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 rounded-xl border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-400 text-sm bg-white"
-                    required
-                  />
                 </div>
               </div>
 
@@ -295,7 +400,7 @@ const AdminPanel = ({
             {/* DETAILS - Full width nhưng nhỏ gọn */}
             <div>
               <label className="block text-blue-700 font-bold mb-2 text-sm">
-                Thông tin chi tiết *
+                Thông Tin Tài Khoản*
               </label>
               <textarea
                 name="details"

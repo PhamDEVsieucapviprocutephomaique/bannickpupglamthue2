@@ -117,7 +117,7 @@ const GameDetailModal = ({ account, isOpen, onClose }) => {
                 LIÊN HỆ MUA NICK
               </h3>
               <a
-                href={account.facebookLink || "https://facebook.com"}
+                href={"https://www.facebook.com/phuongfzvinh/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold text-base px-6 py-3 rounded-lg transition-all duration-300 shadow-xl transform hover:scale-105 border-2 border-emerald-400"

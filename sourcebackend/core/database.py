@@ -8,7 +8,7 @@ load_dotenv()
 
 # DATABASE_URL = "mysql+pymysql://hwuwafaxhosting_dev:123456aA@@202.92.4.66:3306/hwuwafaxhosting_game_nick"
 
-DATABASE_URL = "mysql+pymysql://hwuwafaxhosting_dev:123456aA%40@202.92.4.66:3306/hwuwafaxhosting_game_nick"
+DATABASE_URL = "mysql+pymysql://aqczepfrhosting_dev:123456aA%40@202.92.4.66:3306/aqczepfrhosting_game_nick"
 
 
 print(f"DEBUG: DATABASE_URL value is: {DATABASE_URL}")
@@ -34,9 +34,9 @@ def create_db_and_tables():
     """
     try:
         SQLModel.metadata.create_all(engine)
-        print("✅ Đã tạo tables thành công trong MySQL!")
+        print(" Đã tạo tables thành công trong MySQL!")
     except Exception as e:
-        print(f"❌ Lỗi khi tạo tables: {e}")
+        print(f" Lỗi khi tạo tables: {e}")
         raise
 
 def get_session():

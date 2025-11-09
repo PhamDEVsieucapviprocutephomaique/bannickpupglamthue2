@@ -11,17 +11,16 @@ import News from "./pages/News";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import bg1 from "./image/anh1.jpg";
-import bg2 from "./image/anh2.jpg";
-import bg3 from "./image/anh3.jpg";
-import bg4 from "./image/anh4.jpg";
-import bg5 from "./image/anh5.jpg";
-import bg6 from "./image/anh6.jpg";
-import bg7 from "./image/anh7.jpg";
-import bg8 from "./image/anh8.jpg";
-import bg9 from "./image/anh9.jpg";
+import bg1 from "./image/anhnen.png";
+import bg2 from "./image/anhnen.png";
+import bg3 from "./image/anhnen.png";
+import bg4 from "./image/anhnen.png";
+import bg5 from "./image/anhnen.png";
+import bg6 from "./image/anhnen.png";
+import bg7 from "./image/anhnen.png";
+import bg8 from "./image/anhnen.png";
+import bg9 from "./image/anhnen.png";
 
-// const API_URL = "http://localhost:8000/api";
 const API_URL = "https://api.shopaccpubgpc.vn/api";
 
 function AdminWrapper(props) {

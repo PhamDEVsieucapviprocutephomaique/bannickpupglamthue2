@@ -4,10 +4,9 @@ const VisitorCounter = ({ count }) => {
   const [displayCount, setDisplayCount] = useState(0);
   const [progress, setProgress] = useState(0);
   const animationRef = useRef(null);
-  const hasAnimated = useRef(false); // 👈 THÊM DÒNG NÀY
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    // 👈 CHỈ CHẠY ANIMATION 1 LẦN DUY NHẤT
     if (hasAnimated.current) {
       setDisplayCount(count);
       setProgress(1);
@@ -15,7 +14,7 @@ const VisitorCounter = ({ count }) => {
     }
 
     if (count > 0) {
-      hasAnimated.current = true; // 👈 ĐÁNH DẤU ĐÃ CHẠY
+      hasAnimated.current = true;
 
       const duration = 2000; // 1 GIÂY
       const startTime = Date.now();
@@ -49,7 +48,7 @@ const VisitorCounter = ({ count }) => {
     <div className="w-4/5 mx-auto">
       {/* COUNTER DISPLAY */}
       <div className="text-center mb-3">
-        <span className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        <span className="text-6xl font-bold bg-gradient-to-r from-cyan-600 to-red-600 bg-clip-text text-transparent">
           {displayCount.toLocaleString()}
         </span>
         <p className="text-blue-300 text-sm mt-1">Lượt Truy Cập</p>

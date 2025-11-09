@@ -23,7 +23,7 @@ const Header = ({ isLoggedIn, currentUser, onLogin, onLogout }) => {
 
   const navItems = [
     { path: "/", label: "Trang Chủ" },
-    { path: "/news", label: "Tin Tức" },
+    { path: "/news", label: "Chi tiết và bảo hành" },
     { path: "/admin", label: "Quản Lý Nick" },
   ];
 

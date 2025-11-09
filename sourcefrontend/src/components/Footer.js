@@ -29,8 +29,8 @@ const Footer = () => {
           <div className="text-center">
             <h4 className="text-lg font-bold text-cyan-300 mb-4"> Liên Hệ</h4>
             <div className="space-y-2 text-cyan-200 text-sm">
-              <p className="font-bold text-white text-xl">0922.010011</p>
-              <p> Zalo: 0922.010011</p>
+              <p className="font-bold text-white text-xl">0838.71.2222</p>
+              <p> Zalo:0838.71.2222</p>
               <p> Email: fz101004xxx@gmail.com</p>
             </div>
           </div>
