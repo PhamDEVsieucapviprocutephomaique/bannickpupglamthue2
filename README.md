@@ -1,4 +1,4 @@
-công nghệ sử dụng
+công nghệ sử dụng, làm thuê số 2
 backend : fastapi, phương thức ftp, cloudinary
 frontend : reactjs(javascript, taiwinlcss,...), kỹ thuật lazy loading
 database: postgresql
