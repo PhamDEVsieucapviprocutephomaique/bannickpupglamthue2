@@ -2,7 +2,7 @@ công nghệ sử dụng
 backend : fastapi, phương thức ftp, cloudinary
 frontend : reactjs(javascript, taiwinlcss,...), kỹ thuật lazy loading
 database: postgresql
-deploy : database(neon) , fastapi(render), frontend(host)
+deploy : cloud hosting
 
 note : web không có bảo mật hay gì hết vì đã hỏi qua khách hàng không cần, sẽ liên hệ mở rộng thành web lớn nma trong tương lại :Đ
 
